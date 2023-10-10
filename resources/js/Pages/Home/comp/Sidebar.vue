@@ -7,7 +7,7 @@ import SidebarButton from './SidebarButton.vue';
         class="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform hidden top-0 left-0 bottom-0 z-[60] w-72 fixed border-r pt-7 pb-10 overflow-y-auto scrollbar-y lg:block lg:translate-x-0 lg:right-auto lg:bottom-0 scrollbar-y bg-primary border-gray-700">
         <div class="px-6">
             <a class="flex-none text-xl font-semibold dark:text-white" href="javascript:;" aria-label="Brand">nawt!</a>
-            <p class="text-white text-sm">Hello, E. Norma Stitz!</p>
+            <p class="text-white text-sm">Hello, {{ $page.props.auth.user['display_name'] }}!</p>
         </div>
         <nav class="hs-accordion-group p-6 w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
             <ul class="space-y-1.5">

@@ -1,8 +1,6 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
-defineProps(['toggle', 'error']);
-
-const emit = defineEmits('accessedFrom');
+defineProps(['toggle']);
 
 const form = useForm({
     username: '',
@@ -10,14 +8,15 @@ const form = useForm({
 });
 
 const submit = () => {
-    emit('accessedFrom', 'login')
-    form.post('/login',  {preserveState: true});
+    form.post('/login',  { 
+        preserveState: true
+    });
 }
 </script>
 
 <template>
     <div class="flex shrink flex-col border shadow-sm rounded-xl bg-primary border-primary shadow-primary">
-        <form class="p-4 md:p-5 flex flex-col gap-y-5">
+        <form @submit.prevent="submit()" class="p-4 md:p-5 flex flex-col gap-y-5">
             <h3 class="mt-2 text-lg font-bold text-white leading-3">
                 Log in to nawt!
             </h3>
@@ -43,8 +42,8 @@ const submit = () => {
                         <input type="text" v-model="form.username" placeholder="Username" name="username"
                             class="py-2 px-3 pr-11 block w-full shadow-sm rounded-r-md text-sm focus:z-10 focus:border-secondary focus:ring-secondary bg-accent border-accent text-white">
                     </div>
-                    <div class="inline-flex items-center gap-2 text-sm font-medium text-error" v-if="error.tab === 'login' && error.username">
-                        {{ error.username }}
+                    <div class="inline-flex items-center gap-2 text-sm font-medium text-error" v-if="form.errors.username">
+                        {{ form.errors.username }}
                     </div>
                 </div>
 
@@ -66,20 +65,20 @@ const submit = () => {
                         <input type="password" v-model="form.password" placeholder="Password" name="password"
                             class="py-2 px-3 pr-11 block w-full shadow-sm rounded-r-md text-sm focus:z-10 focus:border-secondary focus:ring-secondary bg-accent border-accent text-white">
                     </div>
-                    <div class="inline-flex items-center gap-2 text-sm font-medium text-error" v-if="error.tab == 'login' && error.password">
-                        {{ error.password }}
+                    <div class="inline-flex items-center gap-2 text-sm font-medium text-error" v-if="form.errors.password">
+                        {{ form.errors.password }}
                     </div>
                 </div>
             </div>
 
-            <a class="inline-flex items-center gap-2 text-sm font-medium text-secondary cursor-pointer hover:contrast-50" @click="submit()">
+            <button type="submit" class="inline-flex items-center gap-2 text-sm font-medium text-secondary cursor-pointer hover:contrast-50">
                 Log-in to your account!
                 <svg class="w-2.5 h-auto" width="16" height="16" viewBox="0 0 16 16" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path d="M5 1L10.6869 7.16086C10.8637 7.35239 10.8637 7.64761 10.6869 7.83914L5 14"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                 </svg>
-            </a>
+            </button>
         </form>
         <div class="bg-primary border-light border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5">
             <a class="inline-flex items-center gap-2 text-sm font-medium text-secondary hover:contrast-50 cursor-pointer"

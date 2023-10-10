@@ -3,21 +3,11 @@ import { ref, computed, Transition } from 'vue';
 import AccountLogin from './comp/AccountLogin.vue';
 import Register from './comp/Register.vue';
 
-const props = defineProps(['errors']);
-
-const accessedFrom = ref('');
-
 const toggleCard = ref(true);
 const toggleTitle = computed(() => {
     return toggleCard.value ? 'Login' : 'Register';
 })
 
-const showErrors = computed(() => {
-    return {
-        tab: accessedFrom.value,
-        ...props.errors
-    }
-});
 </script>
 
 <template class="bg-slate-700">
@@ -34,8 +24,8 @@ const showErrors = computed(() => {
             </p>
         </div>
         <Transition mode="out-in">
-            <AccountLogin :toggle="() => toggleCard = false" :error="showErrors" @accessed-from="(value) => accessedFrom = value" v-if="toggleCard" />
-            <Register :toggle="() => toggleCard = true" :error="showErrors" @accessed-from="(value) => accessedFrom = value" v-else />
+            <AccountLogin :toggle="() => toggleCard = false" v-if="toggleCard" />
+            <Register :toggle="() => toggleCard = true" v-else />
         </Transition>
     </div>
 </template>
