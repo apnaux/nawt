@@ -1,16 +1,29 @@
 <script setup>
-import { ref, watch, Transition } from 'vue';
+import { ref, computed, Transition } from 'vue';
 import AccountLogin from './comp/AccountLogin.vue';
 import Register from './comp/Register.vue';
 
-const toggleCard = ref(true);
+const props = defineProps(['errors']);
 
-watch(toggleCard, (value) => {
-    console.log(value);
+const accessedFrom = ref('');
+
+const toggleCard = ref(true);
+const toggleTitle = computed(() => {
+    return toggleCard.value ? 'Login' : 'Register';
+})
+
+const showErrors = computed(() => {
+    return {
+        tab: accessedFrom.value,
+        ...props.errors
+    }
 });
 </script>
 
 <template class="bg-slate-700">
+    <Head>
+        <title>{{ toggleTitle }}</title>
+    </Head>
     <div class="w-screen h-screen flex flex-col gap-y-8 justify-center items-center bg-pattern">
         <div class="flex flex-col justify-center items-center gap-y-2">
             <h1 class="mt-2 text-4xl font-bold text-white">
@@ -21,8 +34,8 @@ watch(toggleCard, (value) => {
             </p>
         </div>
         <Transition mode="out-in">
-            <AccountLogin @change="() => toggleCard = false" v-if="toggleCard" />
-            <Register @change="() => toggleCard = true" v-else />
+            <AccountLogin :toggle="() => toggleCard = false" :error="showErrors" @accessed-from="(value) => accessedFrom = value" v-if="toggleCard" />
+            <Register :toggle="() => toggleCard = true" :error="showErrors" @accessed-from="(value) => accessedFrom = value" v-else />
         </Transition>
     </div>
 </template>

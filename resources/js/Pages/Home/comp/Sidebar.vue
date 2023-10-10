@@ -11,7 +11,7 @@ import SidebarButton from './SidebarButton.vue';
         </div>
         <nav class="hs-accordion-group p-6 w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
             <ul class="space-y-1.5">
-                <SidebarButton>
+                <SidebarButton link="/" method="get">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-4">
                         <g data-name="Layer 2">
                             <g data-name="home">
@@ -24,7 +24,7 @@ import SidebarButton from './SidebarButton.vue';
 
                     Journals and Tasks
                 </SidebarButton>
-                <SidebarButton>
+                <SidebarButton link="/" method="get">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-4">
                         <g data-name="Layer 2">
                             <g data-name="image">
@@ -38,7 +38,7 @@ import SidebarButton from './SidebarButton.vue';
 
                     Gallery
                 </SidebarButton>
-                <SidebarButton>
+                <SidebarButton link="/" method="get">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-4">
                         <g data-name="Layer 2">
                             <g data-name="lock">
@@ -53,7 +53,7 @@ import SidebarButton from './SidebarButton.vue';
                     Profile
                 </SidebarButton>
 
-                <SidebarButton>
+                <SidebarButton link="/" method="get">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-4">
                         <g data-name="Layer 2">
                             <g data-name="settings-2">
@@ -70,7 +70,7 @@ import SidebarButton from './SidebarButton.vue';
                     Settings
                 </SidebarButton>
 
-                <SidebarButton>
+                <SidebarButton link="/logout" method="post">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-4">
                         <g data-name="Layer 2">
                             <g data-name="power">

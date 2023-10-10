@@ -1,10 +1,23 @@
 <script setup>
+import { useForm } from '@inertiajs/vue3';
+defineProps(['toggle', 'error']);
 
+const emit = defineEmits('accessedFrom');
+
+const form = useForm({
+    username: '',
+    password: ''
+});
+
+const submit = () => {
+    emit('accessedFrom', 'register')
+    form.post('/register', {preserveState: true });
+}
 </script>
 
 <template>
     <div class="flex shrink flex-col border shadow-sm rounded-xl bg-primary border-primary shadow-primary">
-        <div class="p-4 md:p-5 flex flex-col gap-y-5">
+        <form class="p-4 md:p-5 flex flex-col gap-y-5">
             <h3 class="mt-2 text-lg font-bold text-white leading-3">
                 Register to nawt!
             </h3>
@@ -27,8 +40,11 @@
                                 </g>
                             </svg>
                         </span>
-                        <input type="text" placeholder="Username"
+                        <input type="text" v-model="form.username" placeholder="Username" name="username"
                             class="py-2 px-3 pr-11 block w-full shadow-sm rounded-r-md text-sm focus:z-10 focus:border-secondary focus:ring-secondary bg-accent border-accent text-white">
+                    </div>
+                    <div class="inline-flex items-center gap-2 text-sm font-medium text-error" v-if="error.tab == 'register' && error.username">
+                        {{ error.username }}
                     </div>
                 </div>
 
@@ -47,13 +63,16 @@
                                 </g>
                             </svg>
                         </span>
-                        <input type="text" placeholder="Password"
+                        <input type="text" v-model="form.password" placeholder="Password" name="password"
                             class="py-2 px-3 pr-11 block w-full shadow-sm rounded-r-md text-sm focus:z-10 focus:border-secondary focus:ring-secondary bg-accent border-accent text-white">
+                    </div>
+                    <div class="inline-flex items-center gap-2 text-sm font-medium text-error" v-if="error.tab == 'register' && error.password">
+                        {{ error.password }}
                     </div>
                 </div>
             </div>
 
-            <a class="inline-flex items-center gap-2 text-sm font-medium text-secondary hover:contrast-50" href="#">
+            <a @click="submit()" class="inline-flex items-center gap-2 text-sm font-medium text-secondary cursor-pointer hover:contrast-50">
                 Register now!
                 <svg class="w-2.5 h-auto" width="16" height="16" viewBox="0 0 16 16" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
@@ -61,10 +80,10 @@
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                 </svg>
             </a>
-        </div>
+        </form>
         <div class="bg-primary border-light border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5">
             <a class="inline-flex items-center gap-2 text-sm font-medium text-secondary hover:contrast-50 cursor-pointer"
-                @click="$emit('change')">
+                @click="toggle">
                 Already have a nawt! account?
             </a>
         </div>

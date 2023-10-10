@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('journal_images', function (Blueprint $table) {
-            $table->ulid('id');
+            $table->ulid('id')->primary();
             $table->foreignUlid('journal_id');
             $table->longText('file_location');
             $table->timestamps();

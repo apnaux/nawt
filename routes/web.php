@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -14,6 +15,27 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
+Route::get('/login', function () {
     return Inertia::render('Login/Login');
+})->name('login');
+
+Route::post('/login', [AccountController::class, 'login']);
+Route::post('/register', [AccountController::class, 'register']);
+
+Route::middleware('auth')->group(function () {
+    Route::get('/', function (Request $request) {
+        $user = Auth::user();
+        if(is_null($user['display_name'])){
+            return redirect('/firstrun');
+        }
+        return Inertia::render('Home/Index');
+    });
+
+    Route::get('/firstrun', function () {
+        return Inertia::render('FirstRun/Index');
+    });
+
+    Route::post('/firstrun', [AccountController::class, 'firstrun']);
+
+    Route::post('/logout', [AccountController::class, 'logout']);
 });
